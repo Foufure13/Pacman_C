@@ -1,0 +1,40 @@
+Pour afficher un tableau à deux dimensions en utilisant la bibliothèque ncurses en langage C, vous pouvez utiliser une combinaison de fonctions telles que mvprintw() et refresh() pour afficher chaque élément du tableau.
+
+Voici un exemple de code qui utilise ncurses pour afficher un tableau à deux dimensions de chaînes de caractères :
+
+scss
+
+#include <ncurses.h>
+
+int main() {
+  char* tableau[3][3] = {{"A", "B", "C"},
+                         {"D", "E", "F"},
+                         {"G", "H", "I"}};
+  int row, col;
+
+  // Initialisation de ncurses
+  initscr();
+
+  // Calcul de la position centrale pour l'affichage
+  getmaxyx(stdscr, row, col);
+
+  // Affichage du tableau à deux dimensions
+  for(int i=0; i<3; i++) {
+    for(int j=0; j<3; j++) {
+      mvprintw(row/2-1+i, (col-7)/2+j*2, "%s", tableau[i][j]);
+    }
+  }
+
+  // Actualisation de l'affichage
+  refresh();
+
+  // Attendre l'utilisateur pour quitter
+  getch();
+
+  // Nettoyer la fenêtre ncurses
+  endwin();
+
+  return 0;
+}
+
+Ce code initialise la bibliothèque ncurses en appelant initscr(), puis calcule la position centrale de la fenêtre en utilisant getmaxyx(). Ensuite, il utilise une boucle for pour parcourir chaque élément du tableau à deux dimensions et utilise mvprintw() pour afficher chaque élément centré sur la fenêtre. Enfin, il utilise refresh() pour mettre à jour l'affichage, attend que l'utilisateur appuie sur une touche
