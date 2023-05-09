@@ -19,16 +19,16 @@ Deplacement* deplacement = &deplacementInstance;
 
 void collision(MAPS *map, SDL_Rect *pacman_dstrect, SDL_Rect *pacman_srcrect, Deplacement *rect_image)
 {
-    if ( rect_image->directionY == 1 && rect_image->vitesseY == 1 && map->tableau[pacman_dstrect->y+16][pacman_dstrect->x]  == '-'){
+    if ( rect_image->directionY == 1 && rect_image->vitesseY == 1 && (map->tableau[pacman_dstrect->y+16][pacman_dstrect->x]  == '-' || map->tableau[pacman_dstrect->y+1][pacman_dstrect->x]  == 'M')){
         rect_image->vitesseY = 0 ;
     }
-    if ( rect_image->directionY == -1 && rect_image->vitesseY == 1 && map->tableau[pacman_dstrect->y-16][pacman_dstrect->x]  == '-'){
+    if ( rect_image->directionY == -1 && rect_image->vitesseY == 1 && (map->tableau[pacman_dstrect->y-16][pacman_dstrect->x]  == '-' || map->tableau[pacman_dstrect->y-1][pacman_dstrect->x]  == 'M')){
         rect_image->vitesseY = 0 ;
     }
-    if ( rect_image->directionX == 1 && rect_image->vitesseX == 1 && map->tableau[pacman_dstrect->y][pacman_dstrect->x+16]  == '|'){
+    if ( rect_image->directionX == 1 && rect_image->vitesseX == 1 && (map->tableau[pacman_dstrect->y][pacman_dstrect->x+16]  == '|' || map->tableau[pacman_dstrect->y][pacman_dstrect->x+1]  == 'M')){
         rect_image->vitesseX = 0 ;
     }
-    if ( rect_image->directionX == -1 && rect_image->vitesseX == 1 && map->tableau[pacman_dstrect->y][pacman_dstrect->x-16]  == '|'){
+    if ( rect_image->directionX == -1 && rect_image->vitesseX == 1 && (map->tableau[pacman_dstrect->y][pacman_dstrect->x-16]  == '|' || map->tableau[pacman_dstrect->y][pacman_dstrect->x-1]  == 'M')){
         rect_image->vitesseX = 0 ;
     }
 }
@@ -55,26 +55,26 @@ void appuye_touche(SDL_Event event, SDL_bool *programme, Deplacement *rect_image
                 switch (event.key.keysym.sym)
                 {
                 case SDLK_b:
-                    printf("Appui sur la touche B\n");
+                    // printf("Appui sur la touche B\n");
                     continue;
                 case SDLK_z:
-                    printf("Appui sur la touche Z\n");
+                    // printf("Appui sur la touche Z\n");
                     pacman_control(pacman_srcrect, rect_image, 32, 0, 0, 1 ,-1);                  
                     continue;
                 case SDLK_q:
-                    printf("Appui sur la touche Q\n"); 
+                    // printf("Appui sur la touche Q\n"); 
                     pacman_control(pacman_srcrect, rect_image, 0, 1, -1, 0 ,0);         
                     continue;
                 case SDLK_d:
-                    printf("Appui sur la touche D\n");
+                    // printf("Appui sur la touche D\n");
                     pacman_control(pacman_srcrect, rect_image, 16, 1, 1, 0 ,0);   
                     continue;
                 case SDLK_s:
-                    printf("Appui sur la touche S\n");
+                    // printf("Appui sur la touche S\n");
                     pacman_control(pacman_srcrect, rect_image, 48, 0, 0, 1 ,1);                  
                     continue; 
                 case SDLK_SPACE:
-                    printf("Appui sur la touche ESPACE\n");
+                    // printf("Appui sur la touche ESPACE\n");
                     rect_image->vitesseY = 0;
                     rect_image->vitesseX = 0;     
                     continue;
@@ -86,7 +86,7 @@ void appuye_touche(SDL_Event event, SDL_bool *programme, Deplacement *rect_image
                 switch (event.key.keysym.sym)
                 {
                 case SDLK_b:
-                    printf("Relâche de la touche B\n");
+                    // printf("Relâche de la touche B\n");
                     continue;
                 
                 default:

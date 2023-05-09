@@ -13,6 +13,12 @@
 #include "map.h"
 
 
+#define spawn_pacman_x 16
+#define spawn_pacman_y 16
+#define windows_settings_width 10
+#define windows_settings_height 3
+
+
 void GestErreur(char * message)
 {
     SDL_Log("%s : %s !\n ",message,SDL_GetError());
@@ -59,10 +65,15 @@ void stop_border_screen(SDL_Rect rectangle,int windowHauteur,int windowLargeur,D
 int main(int argc, char** argv)
 {
     MAPS map;
+    int nombre_structure_largeur = ((map.x - 16) /16)/5;
+    int nombre_structure_hauteur = (((map.y - 16) /16)/10) ;
 
-    int windowLargeur = map.x = 800, windowHauteur = map.y = 300;
+    int windowLargeur = map.x = 32 + (windows_settings_width * 16 *5);
+    int windowHauteur = map.y = 16 + 32 + (windows_settings_height * 16 * 10 );
 
     allocation_memoire_tableau(&map);
+    seedmap(&map);
+
 
     SDL_Window *fenetre=SDL_CreateWindow("SDL2 Sprite Sheets",SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowLargeur, windowHauteur, 0);
     SDL_Renderer *rendu=SDL_CreateRenderer(fenetre, -1, 0);
@@ -73,15 +84,16 @@ int main(int argc, char** argv)
     SDL_Event event;
     
     Uint32 ticks = SDL_GetTicks();
-    Uint32 seconds = ticks / 1000;
-    Uint32 sprite = seconds % 4;
+    Uint32 seconds = ticks / 1000 ;
+    Uint32 sprite = seconds % 8;
 
 
     SDL_Rect pacman_srcrect = { 16, 16, 15, 15 };
-    SDL_Rect pacman_dstrect = { 20, 20, 15, 15 };
+    SDL_Rect pacman_dstrect = { spawn_pacman_x, spawn_pacman_y, 15, 15 };
 
-
-
+    création_point_map(&map, fenetre,rendu);
+    
+  // system("clear"); //clear le terminal
 
 //INITIALISATION
 initialisation_fenetre();
@@ -115,6 +127,9 @@ initialisation_fenetre();
     rect_image.directionX = 1;
     rect_image.vitesseX = 0;
 
+
+    // afficher_map_debug(map);
+
     while (programme)
     {
 
@@ -139,8 +154,14 @@ initialisation_fenetre();
         appuye_touche(event, &programme, &rect_image, &pacman_srcrect,&pacman_dstrect, &map);
         collision(&map, &pacman_dstrect,  &pacman_srcrect,  &rect_image);
 
+
+
         // printf("position X du pacman -> %d \n",pacman_dstrect.x );
         // printf("position Y du pacman -> %d \n",pacman_dstrect.y );
+        // printf("Dans le tableau -> %c \n",   map.tableau[pacman_dstrect.y][pacman_dstrect.x]);
+
+        // printf("centre largeur map -> %d\n",get_center_map_largeur(&map));
+        // printf("centre hauteur map -> %d\n",get_center_map_hauteur(&map));
 
         // Effacer le rendu
         SDL_RenderClear(rendu);
@@ -148,11 +169,12 @@ initialisation_fenetre();
         SDL_RenderCopy(rendu, texture,  &pacman_srcrect,&pacman_dstrect);
         
         ajout_mur_map(&map, fenetre,rendu);
+        ajout_structur_map(&map, fenetre,rendu);
+        ajout_point_map(&map,fenetre,rendu);
         
         // // Afficher le rendu
         SDL_RenderPresent(rendu);
-
-
+        
         // std::cout << "Delta Time: " << deltaTime << std::endl;
         // std::cout << "FPS: " << 60.0 - deltaTime << std::endl;
         SDL_Delay(1000.0f / (200.0 - deltaTime));
@@ -162,6 +184,9 @@ initialisation_fenetre();
 //DESTRUCTION
 
     nettoyage_tableau(&map);
+    nettoyage_seedmap(&map);
+    nettoyage_pointMap(&map);
+
 
     //Effacer le rendu
     if (SDL_RenderClear(rendu)!=0)
