@@ -16,8 +16,8 @@
 
 // #define spawn_pacman_x 16
 // #define spawn_pacman_y 16
-#define windows_settings_width 10
-#define windows_settings_height 3
+#define windows_settings_width 15
+#define windows_settings_height 5
 
 
 void GestErreur(char * message)
