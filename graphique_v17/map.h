@@ -7,7 +7,7 @@
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_test_images.h>
-#include <ncurses.h>
+
 
 #ifndef MAPS_H
 #define MAPS_H

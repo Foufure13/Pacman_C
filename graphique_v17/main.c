@@ -1,5 +1,4 @@
-#include <SDL2/SDL_keycode.h>
-#include <SDL2/SDL_stdinc.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +9,9 @@
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_test_images.h>
 #include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_keycode.h>
+#include <SDL2/SDL_stdinc.h>
+
 
 
 #include "keybinding_action.h"

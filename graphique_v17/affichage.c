@@ -11,7 +11,7 @@
 #include <SDL2/SDL_test_images.h>
 #include <SDL2/SDL_ttf.h>
 
-#include <ncurses.h>
+
 #include "affichage.h"
 
 void game_over_pacman (MAPS *maps, SDL_Renderer *rendu, int niveau)

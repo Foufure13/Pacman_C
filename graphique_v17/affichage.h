@@ -8,7 +8,7 @@
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_test_images.h>
 
-#include <ncurses.h>
+
 #include "keybinding_action.h"
 
 #ifndef AFFICHAGE_H
